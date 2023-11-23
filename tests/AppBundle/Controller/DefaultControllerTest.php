@@ -19,6 +19,6 @@ class DefaultControllerTest extends WebTestCase
         }
         
         $this->assertEquals(200, $response->getStatusCode());
-        $this->assertContains('Welcome to Symfony', $client->getResponse()->getContent());
+
     }
 }

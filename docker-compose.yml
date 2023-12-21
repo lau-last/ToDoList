@@ -1,20 +1,23 @@
 version: '3'
 services:
   db:
+    networks:
+      - todolist
     platform: linux/x86_64
     image: mysql:5.7
     volumes:
       - ./db_data:/var/lib/mysql
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: password@SQL123
+      MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: todolist
-      MYSQL_USER: root
-      MYSQL_PASSWORD: password@SQL123
+      MYSQL_ROOT_USER: "#"
 #      DOCKER_DEFAULT_PLATFORM: linux/amd64
     ports:
       - "3306:3306"
   webphp:
+    networks:
+      - todolist
     image: todolist
     volumes:
       - .:/var/www/html
@@ -23,3 +26,5 @@ services:
       - "8000:8000"
     depends_on:
       - db
+networks:
+  todolist:

@@ -10,21 +10,20 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: todolist
-      MYSQL_ROOT_USER: "#"
-#      DOCKER_DEFAULT_PLATFORM: linux/amd64
+    #      DOCKER_DEFAULT_PLATFORM: linux/amd64
     ports:
-      - "3306:3306"
+      - "3307:3306"
   webphp:
     networks:
       - todolist
     image: todolist
+    build:
+      dockerfile: ./Dockerfile
     volumes:
       - .:/var/www/html
     restart: always
     ports:
       - "8000:8000"
-    depends_on:
-      - db
+
 networks:
   todolist:

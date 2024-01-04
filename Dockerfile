@@ -21,6 +21,8 @@ RUN apt-get update && \
         php7.4 \
         php7.4-pdo \
         php7.4-mysql \
+        php7.4-apcu \
+        php7.4-xdebug \
         php7.4-cli \
         php7.4-fpm \
         php7.4-intl \

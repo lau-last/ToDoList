@@ -1,3 +1,3 @@
-index:
-    path: /public
-    controller: App\Controller\DefaultController::indexAction
+#index:
+#    path: /
+#    controller: App\Controller\DefaultController::indexAction

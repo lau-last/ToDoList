@@ -3,7 +3,7 @@ services:
   db:
     networks:
       - todolist
-    platform: linux/x86_64
+#    platform: linux/x86_64
     image: mysql:5.7
     volumes:
       - ./db_data:/var/lib/mysql

@@ -4,12 +4,8 @@
     "type": "project",
     "autoload": {
         "psr-4": {
-            "": "src/"
-        },
-        "classmap": [
-            "app/AppKernel.php",
-            "app/AppCache.php"
-        ]
+            "App\\": "src/"
+        }
     },
     "autoload-dev": {
         "psr-4": {
@@ -17,15 +13,21 @@
         }
     },
     "require": {
-        "php": ">=7.1",
+        "php": ">=7.1.3",
+        "ext-ctype": "*",
+        "ext-iconv": "*",
+        "symfony/console": "4.4.*",
+        "symfony/dotenv": "4.4.*",
+        "symfony/flex": "^1.3.1",
         "symfony/framework-bundle": "4.4.*",
+        "symfony/yaml": "4.4.*",
         "doctrine/orm": "^2.5",
         "doctrine/doctrine-bundle": "^1.6",
-        "symfony/swiftmailer-bundle": "^2.3",
         "symfony/polyfill-apcu": "^1.0",
-        "sensio/framework-extra-bundle": "^3.0.2",
-        "incenteev/composer-parameter-handler": "^2.0",
-        "symfony/flex": "^1.21"
+        "sensio/framework-extra-bundle": "^6.2",
+        "symfony/security-bundle": "4.4.*",
+        "symfony/twig-bundle": "4.4.*",
+        "symfony/asset": "4.4.*"
     },
     "require-dev": {
         "symfony/phpunit-bridge": "^3.0",
@@ -33,7 +35,6 @@
     },
     "scripts": {
         "symfony-scripts": [
-            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
@@ -52,15 +53,7 @@
         }
     },
     "extra": {
-        "symfony-app-dir": "app",
-        "symfony-bin-dir": "bin",
-        "symfony-var-dir": "var",
-        "symfony-web-dir": "web",
-        "symfony-tests-dir": "tests",
-        "symfony-assets-install": "relative",
-        "incenteev-parameters": {
-            "file": "app/config/parameters.yml"
-        }
+        "symfony-assets-install": "relative"
     },
     "config": {
         "allow-plugins": {

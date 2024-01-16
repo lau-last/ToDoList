@@ -15,23 +15,27 @@ RUN apt-get update && \
         libxml2-dev \
         libpq-dev
 
-# Installer PHP 7.4
+RUN apt-get install -y lsb-release apt-transport-https ca-certificates
+RUN wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
+RUN sh -c 'echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" > /etc/apt/sources.list.d/php.list'
+
+# Installer PHP 8.3
 RUN apt-get update && \
     apt-get install -y \
-        php7.4 \
-        php7.4-pdo \
-        php7.4-mysql \
-        php7.4-apcu \
-        php7.4-xdebug \
-        php7.4-cli \
-        php7.4-fpm \
-        php7.4-intl \
-        php7.4-mbstring \
-        php7.4-xml \
-        php7.4-zip \
-        php7.4-pgsql \
-        php7.4-gd \
-        php7.4-curl
+        php8.3 \
+        php8.3-pdo \
+        php8.3-mysql \
+        php8.3-apcu \
+        php8.3-xdebug \
+        php8.3-cli \
+        php8.3-fpm \
+        php8.3-intl \
+        php8.3-mbstring \
+        php8.3-xml \
+        php8.3-zip \
+        php8.3-pgsql \
+        php8.3-gd \
+        php8.3-curl
 
 # Installer Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer

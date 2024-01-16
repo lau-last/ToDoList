@@ -4,9 +4,11 @@ namespace App\Controller;
 
 use App\Entity\Task;
 use App\Form\TaskType;
+use App\Repository\TaskRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class TaskController extends controller
@@ -14,9 +16,10 @@ class TaskController extends controller
     /**
      * @Route("/tasks", name="task_list")
      */
-    public function listAction()
+    public function listAction(TaskRepository $taskRepository): Response
     {
-        return $this->render('task/list.html.twig', ['tasks' => $this->getDoctrine()->getRepository('AppBundle:Task')->findAll()]);
+        $tasks = $taskRepository->findAll();
+        return $this->render('task/list.html.twig', ['tasks' => $tasks]);
     }
 
     /**
@@ -29,7 +32,7 @@ class TaskController extends controller
 
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
             $em->persist($task);
@@ -52,7 +55,7 @@ class TaskController extends controller
 
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
             $this->addFlash('success', 'La tâche a bien été modifiée.');

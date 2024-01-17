@@ -19,9 +19,13 @@ RUN apt-get install -y lsb-release apt-transport-https ca-certificates
 RUN wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
 RUN sh -c 'echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" > /etc/apt/sources.list.d/php.list'
 
+RUN apt-get update && apt-get install -y curl sudo \
+    && curl -1sLf 'https://dl.cloudsmith.io/public/symfony/stable/setup.deb.sh' | bash
+
 # Installer PHP 8.3
 RUN apt-get update && \
     apt-get install -y \
+        symfony-cli \
         php8.3 \
         php8.3-pdo \
         php8.3-mysql \
@@ -55,4 +59,5 @@ EXPOSE 8000
 # Commande par défaut pour démarrer le serveur Symfony
 # CMD ["php", "bin/console", "server:run", "0.0.0.0:8000"]
 
-CMD php -S 0.0.0.0:8000 -t public
+# CMD php -S 0.0.0.0:8000 -t public
+CMD symfony server:start

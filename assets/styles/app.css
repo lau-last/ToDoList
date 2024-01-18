@@ -1,7 +1,7 @@
 :root {
     --primary-color: #364249;
+    --white-color: #FFFFFF;
 }
-
 
 nav {
     background-color: var(--primary-color);
@@ -18,6 +18,11 @@ nav {
     object-fit: cover;
 }
 
-.card-header{
+.card {
+    background-color: var(--primary-color);
+    color: var(--white-color);
+}
+
+.contouring-form {
     background-color: var(--primary-color);
 }

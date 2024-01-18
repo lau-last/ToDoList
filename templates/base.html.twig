@@ -26,6 +26,7 @@
 
         <a class="navbar-brand" href="{{ path('homepage') }}">ToDoList</a>
 
+        {% if app.user %}
         <div class="dropstart">
             <button class="btn btn-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" class="bi bi-list-task" viewBox="0 0 16 16">
@@ -40,6 +41,7 @@
                 <li><a class="dropdown-item" href="">Consulter la liste des tâches terminées</a></li>
             </ul>
         </div>
+        {% endif %}
 
         <div class="dropdown dropstart">
             <button class="btn btn-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false">

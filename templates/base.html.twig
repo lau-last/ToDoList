@@ -54,6 +54,9 @@
             </button>
             <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="{{ path('user_create') }}">Créer un utilisateur</a></li>
+                {% if is_granted('ROLE_ADMIN') %}
+                <li><a class="dropdown-item" href="{{ path('user_list') }}">Liste utilisateur</a></li>
+                {% endif %}
                 {% if app.user %}
                     <li><a class="dropdown-item" href="{{ path('logout') }}">Se déconnecter</a></li>
                     <li><a class="dropdown-item" href="{{ path('user_list') }}">Liste des utilisateurs</a></li>

@@ -13,10 +13,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class UserController extends AbstractController
 {
-
+    #[IsGranted('ROLE_ADMIN')]
     #[Route('/users', name: 'user_list')]
     public function listAction(UserRepository $userRepository): Response
     {
@@ -29,9 +30,9 @@ class UserController extends AbstractController
 
     #[Route('/users/create', name: 'user_create')]
     public function createAction(
-        Request                      $request,
+        Request                     $request,
         UserPasswordHasherInterface $encoder,
-        EntityManagerInterface       $manager
+        EntityManagerInterface      $manager
     ): RedirectResponse|Response
     {
         $user = new User();
@@ -54,16 +55,16 @@ class UserController extends AbstractController
         return $this->render('user/create.html.twig', ['form' => $form->createView()]);
     }
 
-
+    #[IsGranted('ROLE_ADMIN')]
     #[Route('/users/{id}/edit', name: 'user_edit')]
     public function editAction(
-        User                         $user,
-        Request                      $request,
+        User                        $user,
+        Request                     $request,
         UserPasswordHasherInterface $encoder,
-        EntityManagerInterface       $manager
+        EntityManagerInterface      $manager
     ): RedirectResponse|Response
     {
-        $form = $this->createForm(UserType::class, $user);
+        $form = $this->createForm(UserType::class, $user, ['edit_mode' => true]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

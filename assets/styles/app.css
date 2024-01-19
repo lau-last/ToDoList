@@ -18,7 +18,8 @@ nav {
     object-fit: cover;
 }
 
-.card {
+.card,
+.table>:not(caption)>*>* {
     background-color: var(--primary-color);
     color: var(--white-color);
 }

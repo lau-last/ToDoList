@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Task;
+use App\Entity\User;
 use App\Form\TaskType;
 use App\Repository\TaskRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -17,10 +18,32 @@ class TaskController extends AbstractController
 {
 
     #[IsGranted('ROLE_USER')]
-    #[Route('/tasks', name: 'task_list')]
+    #[Route('/tasks/all', name: 'task_list_all')]
     public function listAction(TaskRepository $taskRepository): Response
     {
-        $tasks = $taskRepository->findAll();
+        /** @var User $user */
+        $user = $this->getUser();
+        $tasks = $taskRepository->findByUser($user->getId());
+        return $this->render('task/list.html.twig', ['tasks' => $tasks]);
+    }
+
+    #[IsGranted('ROLE_USER')]
+    #[Route('/tasks/done', name: 'task_list_done')]
+    public function listActionDone(TaskRepository $taskRepository): Response
+    {
+        /** @var User $user */
+        $user = $this->getUser();
+        $tasks = $taskRepository->findByUserDoneOrNot($user->getId(), true);
+        return $this->render('task/list.html.twig', ['tasks' => $tasks]);
+    }
+
+    #[IsGranted('ROLE_USER')]
+    #[Route('/tasks/not-done', name: 'task_list_not_done')]
+    public function listActionNotDone(TaskRepository $taskRepository): Response
+    {
+        /** @var User $user */
+        $user = $this->getUser();
+        $tasks = $taskRepository->findByUserDoneOrNot($user->getId(), false);
         return $this->render('task/list.html.twig', ['tasks' => $tasks]);
     }
 
@@ -29,16 +52,16 @@ class TaskController extends AbstractController
     public function createAction(Request $request, EntityManagerInterface $manager): RedirectResponse|Response
     {
         $task = new Task();
+        $user = $this->getUser();
         $form = $this->createForm(TaskType::class, $task);
         $form->handleRequest($request);
+        $task->setUser($user);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $manager->persist($task);
             $manager->flush();
-
             $this->addFlash('success', 'La tâche a été bien été ajoutée.');
-            return $this->redirectToRoute('task_list');
+            return $this->redirectToRoute('task_list_all');
         }
 
         return $this->render('task/create.html.twig', ['form' => $form->createView()]);
@@ -48,8 +71,12 @@ class TaskController extends AbstractController
     #[Route('/tasks/{id}/edit', name: 'task_edit')]
     public function editAction(Task $task, Request $request, EntityManagerInterface $manager): RedirectResponse|Response
     {
+
         $form = $this->createForm(TaskType::class, $task);
         $form->handleRequest($request);
+        /** @var User $user */
+        $user = $this->getUser();
+        $task->setUser($user);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
@@ -57,7 +84,7 @@ class TaskController extends AbstractController
             $manager->flush();
 
             $this->addFlash('success', 'La tâche a bien été modifiée.');
-            return $this->redirectToRoute('task_list');
+            return $this->redirectToRoute('task_list_all');
         }
 
         return $this->render('task/edit.html.twig', [
@@ -73,9 +100,8 @@ class TaskController extends AbstractController
         $task->toggle(!$task->isDone());
         $manager->persist($task);
         $manager->flush();
-
         $this->addFlash('success', sprintf('La tâche %s a bien été marquée comme faite.', $task->getTitle()));
-        return $this->redirectToRoute('task_list');
+        return $this->redirectToRoute('task_list_all');
     }
 
     #[IsGranted('ROLE_USER')]
@@ -84,9 +110,8 @@ class TaskController extends AbstractController
     {
         $manager->remove($task);
         $manager->flush();
-
         $this->addFlash('success', 'La tâche a bien été supprimée.');
-        return $this->redirectToRoute('task_list');
+        return $this->redirectToRoute('task_list_all');
     }
 
 

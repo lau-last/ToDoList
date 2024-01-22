@@ -22,20 +22,45 @@ class TaskRepository extends ServiceEntityRepository
         parent::__construct($registry, Task::class);
     }
 
-    //    /**
-    //     * @return Trick[] Returns an array of Trick objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('t')
-    //            ->andWhere('t.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('t.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+        /**
+         * @return Task[] Returns an array of Trick objects
+         */
+        public function findByUser(int $userId): array
+        {
+            return $this->createQueryBuilder('t')
+                ->join('t.user', 'u')
+                ->andWhere('u.id = :userId')
+                ->setParameter('userId', $userId)
+                ->getQuery()
+                ->getResult();
+        }
+    /**
+     * @return Task[] Returns an array of Trick objects
+     */
+    public function findByUserDoneOrNot(int $userId, bool $isDone): array
+    {
+        return $this->createQueryBuilder('t')
+            ->join('t.user', 'u')
+            ->where('t.isDone = :isDone')
+            ->setParameter('isDone', $isDone)
+            ->andWhere('u.id = :val')
+            ->setParameter('val', $userId)
+            ->getQuery()
+            ->getResult();
+    }
+//    /**
+//     * @return Task[] Returns an array of Trick objects
+//     */
+//    public function findByUserNotDone($userId): array
+//    {
+//        return $this->createQueryBuilder('t')
+//            ->join('t.user', 'u')
+//            ->where('t.isDone = true')
+//            ->andWhere('u.id = :val')
+//            ->setParameter('val', $userId)
+//            ->getQuery()
+//            ->getResult();
+//    }
 
     //    public function findOneBySomeField($value): ?Trick
     //    {

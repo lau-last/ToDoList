@@ -25,7 +25,6 @@
     <div class="container d-flex justify-content-between">
 
         <a class="navbar-brand" href="{{ path('homepage') }}">ToDoList</a>
-
         {% if app.user %}
         <div class="dropstart">
             <button class="btn btn-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -37,8 +36,9 @@
             </button>
             <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="{{ path('task_create') }}">Créer une nouvelle tâche</a></li>
-                <li><a class="dropdown-item" href="{{ path('task_list') }}">Consulter la liste des tâches à faire</a></li>
-                <li><a class="dropdown-item" href="">Consulter la liste des tâches terminées</a></li>
+                <li><a class="dropdown-item" href="{{ path('task_list_all') }}">Consulter la liste des tâches</a></li>
+                <li><a class="dropdown-item" href="{{ path('task_list_not_done') }}">Consulter la liste des tâches à faire</a></li>
+                <li><a class="dropdown-item" href="{{ path('task_list_done') }}">Consulter la liste des tâches terminées</a></li>
             </ul>
         </div>
         {% endif %}
@@ -55,11 +55,10 @@
             <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="{{ path('user_create') }}">Créer un utilisateur</a></li>
                 {% if is_granted('ROLE_ADMIN') %}
-                <li><a class="dropdown-item" href="{{ path('user_list') }}">Liste utilisateur</a></li>
+                <li><a class="dropdown-item" href="{{ path('user_list') }}">Liste des utilisateurs</a></li>
                 {% endif %}
                 {% if app.user %}
                     <li><a class="dropdown-item" href="{{ path('logout') }}">Se déconnecter</a></li>
-                    <li><a class="dropdown-item" href="{{ path('user_list') }}">Liste des utilisateurs</a></li>
                 {% else %}
                 <li><a class="dropdown-item" href="{{ path('login') }}">Se connecter</a></li>
                 {% endif %}

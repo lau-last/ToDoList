@@ -14,6 +14,8 @@
         <server name="APP_ENV" value="test" force="true"/>
         <server name="SHELL_VERBOSITY" value="-1"/>
         <env name="KERNEL_CLASS" value="App\Kernel"/>
+        <env name="APP_ENV" value="test"/>
+        <env name="DATABASE_URL" value="mysql://root:root@db:3306/todolist"/>
     </php>
     <testsuites>
         <testsuite name="Project Test Suite">

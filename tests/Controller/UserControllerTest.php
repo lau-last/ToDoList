@@ -17,6 +17,9 @@ class UserControllerTest extends WebTestCase
     protected function setUp(): void
     {
         $this->client = static::createClient();
+//        exec('php bin/console d:d:c --env=test');
+//        exec('php bin/console d:s:u --force --complete --env=test');
+//        exec('php bin/console d:f:l --env=test');
     }
 
     public function testUserCreation()
@@ -54,14 +57,36 @@ class UserControllerTest extends WebTestCase
 
     }
 
-    private function getUserName(string $name): ?User
+    public function testEditUser(): void
+    {
+        $userRepository = static::getContainer()->get(UserRepository::class);
+        $testUser = $userRepository->findOneByEmail('laurent@example.com');
+        $this->client->loginUser($testUser);
+        $crawler = $this->client->request('GET', '/users/' . $testUser->getId() . '/edit');
+        $this->assertResponseIsSuccessful();
+
+        $form = $crawler->selectButton('Ajouter')->form();
+        $form['user[username]'] = 'Laurent new password';
+        $form['user[password][first]'] = 'password123';
+        $form['user[password][second]'] = 'password123';
+
+        $this->client->submit($form);
+        $this->assertResponseRedirects('/users');
+        $this->client->followRedirect();
+        $this->assertSelectorTextContains('div.alert.alert-success', " L'utilisateur a bien été modifié");
+    }
+
+
+
+
+
+private function getUserName(string $name): ?User
     {
         $entityManager = $this->client->getContainer()->get('doctrine.orm.entity_manager');
         /** @var UserRepository $userRepository */
         $userRepository = $entityManager->getRepository(User::class);
         return $userRepository->findOneBy(['username' => $name]);
     }
-
 
 
 }

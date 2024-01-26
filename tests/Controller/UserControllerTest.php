@@ -4,8 +4,6 @@ namespace App\Tests\Controller;
 
 use App\Entity\User;
 use App\Repository\UserRepository;
-use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -17,9 +15,13 @@ class UserControllerTest extends WebTestCase
     protected function setUp(): void
     {
         $this->client = static::createClient();
-//        exec('php bin/console d:d:c --env=test');
-//        exec('php bin/console d:s:u --force --complete --env=test');
-//        exec('php bin/console d:f:l --env=test');
+    }
+
+    public static function setUpBeforeClass(): void
+    {
+        exec('php bin/console d:d:c --env=test');
+        exec('php bin/console d:s:u --env=test --force --complete');
+        exec('php bin/console d:f:l --env=test --no-interaction --quiet');
     }
 
     public function testUserCreation()
@@ -75,12 +77,9 @@ class UserControllerTest extends WebTestCase
         $this->client->followRedirect();
         $this->assertSelectorTextContains('div.alert.alert-success', " L'utilisateur a bien été modifié");
     }
+    
 
-
-
-
-
-private function getUserName(string $name): ?User
+    private function getUserName(string $name): ?User
     {
         $entityManager = $this->client->getContainer()->get('doctrine.orm.entity_manager');
         /** @var UserRepository $userRepository */

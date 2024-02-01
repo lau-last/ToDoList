@@ -71,7 +71,7 @@ class UserControllerTest extends WebTestCase
         $crawler = $this->client->request('GET', '/users/' . $testUser->getId() . '/edit');
         $this->assertResponseIsSuccessful();
 
-        $form = $crawler->selectButton('Ajouter')->form();
+        $form = $crawler->selectButton('Modifier')->form();
         $form['user[username]'] = 'Laurent new password';
         $form['user[password][first]'] = 'password123';
         $form['user[password][second]'] = 'password123';

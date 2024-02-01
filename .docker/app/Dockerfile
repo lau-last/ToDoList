@@ -13,7 +13,8 @@ RUN apt-get update && \
         libonig-dev \
         libpng-dev \
         libxml2-dev \
-        libpq-dev
+        libpq-dev \
+        nano
 
 RUN apt-get install -y lsb-release apt-transport-https ca-certificates
 RUN wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
@@ -49,6 +50,9 @@ WORKDIR /var/www/html
 
 # Copier les fichiers du projet Symfony dans le conteneur
 # COPY . .
+
+# Copier le php.ini
+# COPY php.ini /etc/php/8.3/fpm/php.ini
 
 # Installer les dépendances du projet Symfony
 # RUN composer install --no-scripts --no-interaction

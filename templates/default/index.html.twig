@@ -5,10 +5,12 @@
 {% endblock %}
 
 {% block body %}
-
+    {% if app.user %}
     <div class="row">
-        <a href="{{ path('task_create') }}" class="btn btn-success">Créer une nouvelle tâche</a>
-        <a href="{{ path('task_list_all') }}" class="btn btn-info">Consulter la liste des tâches à faire</a>
-        <a href="" class="btn btn-secondary">Consulter la liste des tâches terminées</a>
+        <a class="btn btn-success" href="{{ path('task_create') }}">Créer une nouvelle tâche</a>
+        <a class="btn btn-primary" href="{{ path('task_list_all') }}">Consulter la liste des tâches</a>
+        <a class="btn btn-info" href="{{ path('task_list_not_done') }}">Consulter la liste des tâches à faire</a>
+        <a class="btn btn-warning" href="{{ path('task_list_done') }}">Consulter la liste des tâches terminées</a>
     </div>
+    {% endif %}
 {% endblock %}

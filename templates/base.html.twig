@@ -10,11 +10,7 @@
 
         <title>To Do List app</title>
 
-        <!-- Bootstrap Core CSS -->
-        <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet">
-
-        <!-- Custom CSS -->
-        <link href="{{ asset('assets/css/shop-homepage.css') }}" rel="stylesheet">
+        {% block importmap %}{{ importmap('app') }}{% endblock %}
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -30,7 +26,7 @@
                 <div class="navbar-header">
                     <a class="navbar-brand" href="#">To Do List app</a>
 
-                    <img src="{{ asset('assets/img/Logo_OpenClassrooms.png') }}" alt="OpenClassrooms" />
+                    <img src="{{ asset('img/Logo_OpenClassrooms.png') }}" alt="OpenClassrooms" />
                 </div>
             </div>
         </nav>
@@ -64,7 +60,7 @@
                     {% endfor %}
 
                     {% block header_title %}{% endblock %}
-                    {% block header_img %}<img class="slide-image" src="{{ asset('assets/img/todolist_homepage.jpg') }}" alt="todo list">{% endblock %}
+                    {% block header_img %}<img class="slide-image" src="{{ asset('img/todolist_homepage.jpg') }}" alt="todo list">{% endblock %}
                 </div>
             </div>
 

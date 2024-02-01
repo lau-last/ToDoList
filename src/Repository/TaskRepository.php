@@ -3,7 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Task;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -22,18 +24,21 @@ class TaskRepository extends ServiceEntityRepository
         parent::__construct($registry, Task::class);
     }
 
-        /**
-         * @return Task[] Returns an array of Trick objects
-         */
-        public function findByUser(int $userId): array
-        {
-            return $this->createQueryBuilder('t')
-                ->join('t.user', 'u')
-                ->andWhere('u.id = :userId')
-                ->setParameter('userId', $userId)
-                ->getQuery()
-                ->getResult();
-        }
+
+    /**
+     * @return Task[] Returns an array of Trick objects
+     */
+    public function findByUser(int $userId): array
+    {
+        return $this->createQueryBuilder('t')
+            ->join('t.user', 'u')
+            ->andWhere('u.id = :userId')
+            ->setParameter('userId', $userId)
+            ->getQuery()
+            ->getResult();
+    }
+
+
     /**
      * @return Task[] Returns an array of Trick objects
      */
@@ -45,6 +50,18 @@ class TaskRepository extends ServiceEntityRepository
             ->setParameter('isDone', $isDone)
             ->andWhere('u.id = :val')
             ->setParameter('val', $userId)
+            ->getQuery()
+            ->getResult();
+    }
+
+
+    public function findOneByUser(int $userId)
+    {
+        return $this->createQueryBuilder('t')
+            ->join('t.user', 'u')
+            ->andWhere('u.id = :userId')
+            ->setParameter('userId', $userId)
+            ->setMaxResults(1)
             ->getQuery()
             ->getResult();
     }

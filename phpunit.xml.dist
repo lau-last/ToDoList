@@ -16,6 +16,7 @@
         <env name="KERNEL_CLASS" value="App\Kernel"/>
         <env name="APP_ENV" value="test"/>
         <env name="DATABASE_URL" value="mysql://root:root@db:3306/todolist"/>
+        <env name="SYMFONY_DEPRECATIONS_HELPER" value="disabled"/>
     </php>
     <testsuites>
         <testsuite name="Project Test Suite">

@@ -12,17 +12,20 @@ class UserControllerTest extends WebTestCase
 
     private KernelBrowser $client;
 
+
     protected function setUp(): void
     {
         $this->client = static::createClient();
     }
 
+
     public static function setUpBeforeClass(): void
     {
-        exec('php bin/console d:d:c --env=test');
-        exec('php bin/console d:s:u --env=test --force --complete');
+//        exec('php bin/console d:d:c --env=test');
+//        exec('php bin/console d:s:u --env=test --force --complete');
         exec('php bin/console d:f:l --env=test --no-interaction --quiet');
     }
+
 
     public function testUserCreation()
     {
@@ -59,6 +62,7 @@ class UserControllerTest extends WebTestCase
 
     }
 
+
     public function testEditUser(): void
     {
         $userRepository = static::getContainer()->get(UserRepository::class);
@@ -77,7 +81,7 @@ class UserControllerTest extends WebTestCase
         $this->client->followRedirect();
         $this->assertSelectorTextContains('div.alert.alert-success', " L'utilisateur a bien été modifié");
     }
-    
+
 
     private function getUserName(string $name): ?User
     {

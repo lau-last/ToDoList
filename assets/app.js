@@ -1,7 +1,7 @@
-import './bootstrap.js';
-import 'bootstrap';
+import './js/bootstrap.min';
+// import 'bootstrap';
 // import '@popperjs/core';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import './styles/bootstrap.min.css';
 
 /*
  * Welcome to your app's main JavaScript file!

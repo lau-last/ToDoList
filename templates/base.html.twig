@@ -7,17 +7,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="">
         <meta name="author" content="">
-
         <title>To Do List app</title>
-
-        {% block importmap %}{{ importmap('app') }}{% endblock %}
-
-        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-        <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-        <![endif]-->
+        {% block importmap %}
+            {{ importmap('app') }}
+        {% endblock %}
     </head>
 
     <body>
@@ -60,7 +53,9 @@
                     {% endfor %}
 
                     {% block header_title %}{% endblock %}
-                    {% block header_img %}<img class="slide-image" src="{{ asset('img/todolist_homepage.jpg') }}" alt="todo list">{% endblock %}
+                    {% block header_img %}
+                        <img class="slide-image" src="{{ asset('img/todolist_homepage.jpg') }}" alt="todo list">
+                    {% endblock %}
                 </div>
             </div>
 
@@ -75,7 +70,6 @@
         <!-- /.container -->
 
         <div class="container">
-
             <hr>
             <footer>
                 <div class="row">
@@ -86,8 +80,5 @@
             </footer>
 
         </div>
-
-        <script src="{{ asset('assets/js/jquery.js') }}"></script>
-        <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
     </body>
 </html>

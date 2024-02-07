@@ -18,7 +18,7 @@ services:
       - todolist
     image: todolist
     build:
-      dockerfile: ./Dockerfile
+      dockerfile: ./.docker/app/Dockerfile
     volumes:
       - .:/var/www/html
     restart: always

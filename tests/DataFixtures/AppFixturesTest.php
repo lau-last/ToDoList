@@ -3,18 +3,16 @@
 namespace App\Tests\DataFixtures;
 
 use App\DataFixtures\AppFixtures;
+use App\Entity\Task;
+use App\Entity\User;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Exception\NotSupported;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Doctrine\ORM\EntityManagerInterface;
-use App\Entity\User;
-use App\Entity\Task;
 
 class AppFixturesTest extends WebTestCase
 {
-
     private ?EntityManager $entityManager;
-
 
     protected function setUp(): void
     {
@@ -30,7 +28,6 @@ class AppFixturesTest extends WebTestCase
         exec('php bin/console d:s:u --env=test --force --complete');
     }
 
-
     /**
      * @throws NotSupported
      */
@@ -44,11 +41,10 @@ class AppFixturesTest extends WebTestCase
                 [
                 'laurent@example.com',
                 'aurelie@example.com',
-                'sandrine@example.com'
+                'sandrine@example.com',
             ]);
         }
     }
-
 
     /**
      * @throws NotSupported
@@ -64,7 +60,6 @@ class AppFixturesTest extends WebTestCase
         }
     }
 
-
     protected function tearDown(): void
     {
         parent::tearDown();
@@ -72,6 +67,4 @@ class AppFixturesTest extends WebTestCase
         $this->entityManager->close();
         $this->entityManager = null;
     }
-
-
 }

@@ -2,8 +2,8 @@
 
 namespace App\Tests\Entity;
 
-use App\Entity\User;
 use App\Entity\Task;
+use App\Entity\User;
 use PHPUnit\Framework\TestCase;
 
 class UserTest extends TestCase
@@ -58,5 +58,4 @@ class UserTest extends TestCase
         $this->user->removeTask($task);
         $this->assertCount(0, $this->user->getTasks());
     }
-
 }

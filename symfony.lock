@@ -51,6 +51,18 @@
             "migrations/.gitignore"
         ]
     },
+    "friendsofphp/php-cs-fixer": {
+        "version": "3.49",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "3.0",
+            "ref": "be2103eb4a20942e28a6dd87736669b757132435"
+        },
+        "files": [
+            ".php-cs-fixer.dist.php"
+        ]
+    },
     "liip/test-fixtures-bundle": {
         "version": "2.7.2"
     },
@@ -70,6 +82,15 @@
     },
     "sensio/framework-extra-bundle": {
         "version": "v3.0.27"
+    },
+    "squizlabs/php_codesniffer": {
+        "version": "3.8",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "3.6",
+            "ref": "1019e5c08d4821cb9b77f4891f8e9c31ff20ac6f"
+        }
     },
     "symfony/asset-mapper": {
         "version": "6.4",

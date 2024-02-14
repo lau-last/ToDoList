@@ -16,7 +16,6 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class TaskController extends AbstractController
 {
-
     #[IsGranted('ROLE_USER')]
     #[Route('/tasks/all', name: 'task_list_all')]
     public function listAction(TaskRepository $taskRepository): Response
@@ -24,6 +23,7 @@ class TaskController extends AbstractController
         /** @var User $user */
         $user = $this->getUser();
         $tasks = $taskRepository->findByUser($user->getId());
+
         return $this->render('task/list.html.twig', ['tasks' => $tasks]);
     }
 
@@ -34,6 +34,7 @@ class TaskController extends AbstractController
         /** @var User $user */
         $user = $this->getUser();
         $tasks = $taskRepository->findByUserDoneOrNot($user->getId(), true);
+
         return $this->render('task/list.html.twig', ['tasks' => $tasks]);
     }
 
@@ -44,6 +45,7 @@ class TaskController extends AbstractController
         /** @var User $user */
         $user = $this->getUser();
         $tasks = $taskRepository->findByUserDoneOrNot($user->getId(), false);
+
         return $this->render('task/list.html.twig', ['tasks' => $tasks]);
     }
 
@@ -61,6 +63,7 @@ class TaskController extends AbstractController
             $manager->persist($task);
             $manager->flush();
             $this->addFlash('success', 'La tâche a été bien été ajoutée.');
+
             return $this->redirectToRoute('task_list_all');
         }
 
@@ -71,7 +74,6 @@ class TaskController extends AbstractController
     #[Route('/tasks/{id}/edit', name: 'task_edit')]
     public function editAction(Task $task, Request $request, EntityManagerInterface $manager): RedirectResponse|Response
     {
-
         $form = $this->createForm(TaskType::class, $task);
         $form->handleRequest($request);
         /** @var User $user */
@@ -79,11 +81,11 @@ class TaskController extends AbstractController
         $task->setUser($user);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $manager->persist($task);
             $manager->flush();
 
             $this->addFlash('success', 'La tâche a bien été modifiée.');
+
             return $this->redirectToRoute('task_list_all');
         }
 
@@ -101,6 +103,7 @@ class TaskController extends AbstractController
         $manager->persist($task);
         $manager->flush();
         $this->addFlash('success', sprintf('La tâche %s a bien été marquée comme faite.', $task->getTitle()));
+
         return $this->redirectToRoute('task_list_all');
     }
 
@@ -111,8 +114,7 @@ class TaskController extends AbstractController
         $manager->remove($task);
         $manager->flush();
         $this->addFlash('success', 'La tâche a bien été supprimée.');
+
         return $this->redirectToRoute('task_list_all');
     }
-
-
 }

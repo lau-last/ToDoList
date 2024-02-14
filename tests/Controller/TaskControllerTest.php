@@ -11,23 +11,19 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class TaskControllerTest extends WebTestCase
 {
-
     private KernelBrowser $client;
-
 
     protected function setUp(): void
     {
         $this->client = static::createClient();
     }
 
-
     public static function setUpBeforeClass(): void
     {
-//        exec('php bin/console d:d:c --env=test');
-//        exec('php bin/console d:s:u --env=test --force --complete');
+        //        exec('php bin/console d:d:c --env=test');
+        //        exec('php bin/console d:s:u --env=test --force --complete');
         exec('php bin/console d:f:l --env=test --no-interaction --quiet');
     }
-
 
     public function testListAction()
     {
@@ -40,7 +36,6 @@ class TaskControllerTest extends WebTestCase
         $this->assertResponseIsSuccessful();
     }
 
-
     public function testToggleTaskAction()
     {
         $task = $this->getTask();
@@ -50,15 +45,13 @@ class TaskControllerTest extends WebTestCase
         $this->assertTrue($task->isDone());
     }
 
-
     public function testDeleteTaskAction()
     {
         $user = $this->getUserName('Sandrine');
         $this->client->loginUser($user);
-        $this->client->request('GET', '/tasks/' . $this->getOneRealTask($user)->getId() . '/delete');
+        $this->client->request('GET', '/tasks/'.$this->getOneRealTask($user)->getId().'/delete');
         $this->client->followRedirect();
         $this->assertSelectorTextContains('div.alert.alert-success', 'La tâche a bien été supprimée.');
-
     }
 
     public function testCreateTask()
@@ -75,15 +68,14 @@ class TaskControllerTest extends WebTestCase
         $this->client->submit($form);
         $this->assertResponseRedirects('/tasks/all');
         $this->client->followRedirect();
-        $this->assertSelectorTextContains('div.alert.alert-success', "La tâche a été bien été ajoutée.");
+        $this->assertSelectorTextContains('div.alert.alert-success', 'La tâche a été bien été ajoutée.');
     }
-
 
     public function testModifyTask()
     {
         $user = $this->getUserName('Laurent');
         $this->client->loginUser($user);
-        $crawler = $this->client->request('GET', '/tasks/' . $this->getOneRealTask($user)->getId() . '/edit');
+        $crawler = $this->client->request('GET', '/tasks/'.$this->getOneRealTask($user)->getId().'/edit');
         $this->assertResponseIsSuccessful();
 
         $form = $crawler->selectButton('Modifier')->form();
@@ -93,37 +85,34 @@ class TaskControllerTest extends WebTestCase
         $this->client->submit($form);
         $this->assertResponseRedirects('/tasks/all');
         $this->client->followRedirect();
-        $this->assertSelectorTextContains('div.alert.alert-success', "La tâche a bien été modifiée.");
+        $this->assertSelectorTextContains('div.alert.alert-success', 'La tâche a bien été modifiée.');
     }
-
 
     private function getUserName(string $name): ?User
     {
         $entityManager = $this->client->getContainer()->get('doctrine.orm.entity_manager');
         /** @var UserRepository $userRepository */
         $userRepository = $entityManager->getRepository(User::class);
+
         return $userRepository->findOneBy(['username' => $name]);
     }
-
 
     private function getOneRealTask(User $user): ?Task
     {
         $entityManager = $this->client->getContainer()->get('doctrine.orm.entity_manager');
         /** @var TaskRepository $taskRepository */
         $taskRepository = $entityManager->getRepository(Task::class);
+
         return $taskRepository->findOneByUser($user->getId());
     }
-
 
     private function getTask(): Task
     {
         return (new Task())
-            ->setTitle("Test")
-            ->setContent("Test")
+            ->setTitle('Test')
+            ->setContent('Test')
             ->setCreatedAt(new \DateTime())
             ->setUser(new User())
             ->toggle(false);
     }
-
-
 }

@@ -9,7 +9,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Table]
 class Task
 {
-
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -32,25 +31,21 @@ class Task
     #[ORM\ManyToOne(inversedBy: 'tasks')]
     private ?User $user = null;
 
-
     public function __construct()
     {
         $this->createdAt = new \DateTime();
         $this->isDone = false;
     }
 
-
     public function getId(): ?int
     {
         return $this->id;
     }
 
-
     public function getCreatedAt(): \DateTime
     {
         return $this->createdAt;
     }
-
 
     public function setCreatedAt(\DateTime $createdAt): self
     {
@@ -59,12 +54,10 @@ class Task
         return $this;
     }
 
-
     public function getTitle(): ?string
     {
         return $this->title;
     }
-
 
     public function setTitle(?string $title): self
     {
@@ -73,12 +66,10 @@ class Task
         return $this;
     }
 
-
     public function getContent(): ?string
     {
         return $this->content;
     }
-
 
     public function setContent(?string $content): self
     {
@@ -87,12 +78,10 @@ class Task
         return $this;
     }
 
-
     public function isDone(): bool
     {
         return $this->isDone;
     }
-
 
     public function toggle(bool $flag): self
     {
@@ -101,12 +90,10 @@ class Task
         return $this;
     }
 
-
     public function getUser(): ?User
     {
         return $this->user;
     }
-
 
     public function setUser(?User $user): self
     {
@@ -114,6 +101,4 @@ class Task
 
         return $this;
     }
-
-
 }

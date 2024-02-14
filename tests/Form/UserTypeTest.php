@@ -2,13 +2,12 @@
 
 namespace App\Tests\Form;
 
-use Symfony\Component\Form\Test\TypeTestCase;
-use App\Form\UserType;
 use App\Entity\User;
+use App\Form\UserType;
+use Symfony\Component\Form\Test\TypeTestCase;
 
 class UserTypeTest extends TypeTestCase
 {
-
     public function testSubmitValidDataEditModeFalse()
     {
         $formData = [
@@ -37,7 +36,6 @@ class UserTypeTest extends TypeTestCase
 
         $this->assertArrayNotHasKey('roles', $children);
     }
-
 
     public function testSubmitValidDataEditModeTrue()
     {
@@ -68,5 +66,4 @@ class UserTypeTest extends TypeTestCase
 
         $this->assertArrayHasKey('roles', $children);
     }
-
 }

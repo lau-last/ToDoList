@@ -2,13 +2,12 @@
 
 namespace App\Tests\Form;
 
-use Symfony\Component\Form\Test\TypeTestCase;
-use App\Form\TaskType;
 use App\Entity\Task;
+use App\Form\TaskType;
+use Symfony\Component\Form\Test\TypeTestCase;
 
 class TaskTypeTest extends TypeTestCase
 {
-
     public function testSubmitValidData()
     {
         $formData = [
@@ -24,7 +23,6 @@ class TaskTypeTest extends TypeTestCase
         $this->assertEquals($model->getTitle(), $formData['title']);
         $this->assertEquals($model->getContent(), $formData['content']);
 
-
         $view = $form->createView();
         $children = $view->children;
 
@@ -32,5 +30,4 @@ class TaskTypeTest extends TypeTestCase
             $this->assertArrayHasKey($key, $children);
         }
     }
-
 }

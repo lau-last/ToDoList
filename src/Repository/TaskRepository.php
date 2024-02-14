@@ -5,7 +5,6 @@ namespace App\Repository;
 use App\Entity\Task;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -18,12 +17,10 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class TaskRepository extends ServiceEntityRepository
 {
-
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Task::class);
     }
-
 
     /**
      * @return Task[] Returns an array of Trick objects
@@ -37,7 +34,6 @@ class TaskRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
-
 
     /**
      * @return Task[] Returns an array of Trick objects
@@ -54,7 +50,6 @@ class TaskRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-
     public function findOneByUser(int $userId)
     {
         return $this->createQueryBuilder('t')
@@ -65,19 +60,19 @@ class TaskRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
-//    /**
-//     * @return Task[] Returns an array of Trick objects
-//     */
-//    public function findByUserNotDone($userId): array
-//    {
-//        return $this->createQueryBuilder('t')
-//            ->join('t.user', 'u')
-//            ->where('t.isDone = true')
-//            ->andWhere('u.id = :val')
-//            ->setParameter('val', $userId)
-//            ->getQuery()
-//            ->getResult();
-//    }
+    //    /**
+    //     * @return Task[] Returns an array of Trick objects
+    //     */
+    //    public function findByUserNotDone($userId): array
+    //    {
+    //        return $this->createQueryBuilder('t')
+    //            ->join('t.user', 'u')
+    //            ->where('t.isDone = true')
+    //            ->andWhere('u.id = :val')
+    //            ->setParameter('val', $userId)
+    //            ->getQuery()
+    //            ->getResult();
+    //    }
 
     //    public function findOneBySomeField($value): ?Trick
     //    {

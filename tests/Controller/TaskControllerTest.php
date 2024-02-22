@@ -88,6 +88,24 @@ class TaskControllerTest extends WebTestCase
         $this->assertSelectorTextContains('div.alert.alert-success', 'La tâche a bien été modifiée.');
     }
 
+    public function testListActionDone()
+    {
+        $user = $this->getUserName('Laurent');
+        $this->client->loginUser($user);
+        $this->client->request('GET', '/tasks/done');
+        $this->assertResponseIsSuccessful();
+
+    }
+
+    public function testListActionNotDone()
+    {
+        $user = $this->getUserName('Laurent');
+        $this->client->loginUser($user);
+        $this->client->request('GET', '/tasks/not-done');
+        $this->assertResponseIsSuccessful();
+
+    }
+
     private function getUserName(string $name): ?User
     {
         $entityManager = $this->client->getContainer()->get('doctrine.orm.entity_manager');

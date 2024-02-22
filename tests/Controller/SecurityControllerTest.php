@@ -16,4 +16,22 @@ class SecurityControllerTest extends WebTestCase
         $this->assertSelectorExists('input[name="_username"]');
         $this->assertSelectorExists('input[name="_password"]');
     }
+
+    public function testLoginCheck()
+    {
+        $client = static::createClient();
+        $crawler = $client->request('POST', '/login_check', [
+            '_username' => 'laurent',
+            '_password' => '123',
+        ]);
+        $this->assertEquals(302, $client->getResponse()->getStatusCode());
+    }
+
+    public function testLogoutCheck()
+    {
+        $client = static::createClient();
+        $crawler = $client->request('GET', '/logout');
+
+        $this->assertEquals(302, $client->getResponse()->getStatusCode());
+    }
 }

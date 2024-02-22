@@ -42,4 +42,4 @@ The test user and administrator accounts are:
 ### Test Coverage Report
 
 You can access the latest generated test coverage report by opening (with a browser) the index.html file located in the folder:
-> public\test-coverage\index.html
+> public\coverage\index.html

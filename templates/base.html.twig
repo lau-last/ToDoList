@@ -72,7 +72,7 @@
 
             {% block button_all_option %}
                 {% if app.user %}
-                    <div style="display: flex; justify-content: space-between;padding: 3rem 0 3rem 0">
+                    <div style="display: flex; flex-wrap: wrap;justify-content: space-between;padding: 3rem 0 3rem 0">
                         <a class="btn btn-success" href="{{ path('task_create') }}">Créer une nouvelle tâche</a>
                         <a class="btn btn-primary" href="{{ path('task_list_all') }}">Consulter la liste des tâches</a>
                         <a class="btn btn-info" href="{{ path('task_list_not_done') }}">Consulter la liste des tâches à

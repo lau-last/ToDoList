@@ -35,13 +35,14 @@ class AppFixturesTest extends WebTestCase
     {
         (new AppFixtures())->load($this->entityManager);
         $users = $this->entityManager->getRepository(User::class)->findAll();
-        $this->assertCount(3, $users);
+        $this->assertCount(4, $users);
         foreach ($users as $user) {
             $this->assertContains($user->getEmail(),
                 [
                 'laurent@example.com',
                 'aurelie@example.com',
                 'sandrine@example.com',
+                'anonymous@example.com',
             ]);
         }
     }
@@ -52,7 +53,7 @@ class AppFixturesTest extends WebTestCase
     public function testTaskFixtures()
     {
         $tasks = $this->entityManager->getRepository(Task::class)->findAll();
-        $this->assertCount(30, $tasks);
+        $this->assertCount(20, $tasks);
 
         foreach ($tasks as $task) {
             $this->assertStringStartsWith('Titre-', $task->getTitle());

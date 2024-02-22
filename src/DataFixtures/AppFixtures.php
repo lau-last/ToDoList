@@ -11,6 +11,7 @@ class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
+
         $users = [
             [
                 'name' => 'Laurent',
@@ -28,7 +29,7 @@ class AppFixtures extends Fixture
                 'roles' => ['ROLE_USER'],
             ],
             [
-                'name' => 'Anonyme',
+                'name' => 'Anonymous',
                 'email' => 'anonymous@example.com',
                 'roles' => ['ROLE_ANONYMOUS'],
             ],

@@ -11,14 +11,6 @@ class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
-        for ($i = 0; $i < 3; ++$i) {
-            $task = new Task();
-            $task
-                ->setTitle('Anonymous-'.$i)
-                ->setContent('Anonymous-'.$i);
-            $manager->persist($task);
-        }
-
         $users = [
             [
                 'name' => 'Laurent',
@@ -35,6 +27,11 @@ class AppFixtures extends Fixture
                 'email' => 'sandrine@example.com',
                 'roles' => ['ROLE_USER'],
             ],
+            [
+                'name' => 'Anonyme',
+                'email' => 'anonymous@example.com',
+                'roles' => ['ROLE_ANONYMOUS'],
+            ],
         ];
 
         foreach ($users as $userData) {
@@ -46,15 +43,14 @@ class AppFixtures extends Fixture
                 ->setPassword('$2y$10$26QjlDmGjLG2KMPpxOwmbuEc1eJXtdOk37Ybv.Y2Ny58FNutCQRPu');
             $manager->persist($user);
 
-            //            for ($i = 0; $i < 3; $i++) {
-            //
-            //                $task = new Task();
-            //                $task
-            //                    ->setTitle('Titre-' . $i)
-            //                    ->setContent('Content-' . $i)
-            //                    ->setUser($user);
-            //                $manager->persist($task);
-            //            }
+            for ($i = 0; $i < 5; ++$i) {
+                $task = new Task();
+                $task
+                    ->setTitle('Titre-'.$i)
+                    ->setContent('Content-'.$i)
+                    ->setUser($user);
+                $manager->persist($task);
+            }
         }
 
         $manager->flush();

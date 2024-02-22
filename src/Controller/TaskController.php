@@ -14,42 +14,33 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
+#[IsGranted('ROLE_USER')]
 class TaskController extends AbstractController
 {
-    #[IsGranted('ROLE_USER')]
     #[Route('/tasks/all', name: 'task_list_all')]
     public function listAction(TaskRepository $taskRepository): Response
     {
-        /** @var User $user */
-        $user = $this->getUser();
-        $tasks = $taskRepository->findByUser($user->getId());
+        $tasks = $taskRepository->findAll();
 
         return $this->render('task/list.html.twig', ['tasks' => $tasks]);
     }
 
-    #[IsGranted('ROLE_USER')]
     #[Route('/tasks/done', name: 'task_list_done')]
     public function listActionDone(TaskRepository $taskRepository): Response
     {
-        /** @var User $user */
-        $user = $this->getUser();
-        $tasks = $taskRepository->findByUserDoneOrNot($user->getId(), true);
+        $tasks = $taskRepository->findBy(['isDone' => true]);
 
         return $this->render('task/list.html.twig', ['tasks' => $tasks]);
     }
 
-    #[IsGranted('ROLE_USER')]
     #[Route('/tasks/not-done', name: 'task_list_not_done')]
     public function listActionNotDone(TaskRepository $taskRepository): Response
     {
-        /** @var User $user */
-        $user = $this->getUser();
-        $tasks = $taskRepository->findByUserDoneOrNot($user->getId(), false);
+        $tasks = $taskRepository->findBy(['isDone' => false]);
 
         return $this->render('task/list.html.twig', ['tasks' => $tasks]);
     }
 
-    #[IsGranted('ROLE_USER')]
     #[Route('/tasks/create', name: 'task_create')]
     public function createAction(Request $request, EntityManagerInterface $manager): RedirectResponse|Response
     {
@@ -70,7 +61,6 @@ class TaskController extends AbstractController
         return $this->render('task/create.html.twig', ['form' => $form->createView()]);
     }
 
-    #[IsGranted('ROLE_USER')]
     #[Route('/tasks/{id}/edit', name: 'task_edit')]
     public function editAction(Task $task, Request $request, EntityManagerInterface $manager): RedirectResponse|Response
     {
@@ -95,7 +85,6 @@ class TaskController extends AbstractController
         ]);
     }
 
-    #[IsGranted('ROLE_USER')]
     #[Route('/tasks/{id}/toggle', name: 'task_toggle')]
     public function toggleTaskAction(Task $task, EntityManagerInterface $manager): RedirectResponse
     {
@@ -107,7 +96,6 @@ class TaskController extends AbstractController
         return $this->redirectToRoute('task_list_all');
     }
 
-    #[IsGranted('ROLE_USER')]
     #[Route('/tasks/{id}/delete', name: 'task_delete')]
     public function deleteTaskAction(Task $task, EntityManagerInterface $manager): RedirectResponse
     {

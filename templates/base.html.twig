@@ -1,84 +1,105 @@
 <!DOCTYPE html>
 <html lang="fr">
 
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="">
-        <meta name="author" content="">
-        <title>To Do List app</title>
-        {% block importmap %}
-            {{ importmap('app') }}
-        {% endblock %}
-    </head>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>To Do List app</title>
+    {% block importmap %}
+        {{ importmap('app') }}
+    {% endblock %}
+</head>
 
-    <body>
-        <nav class="navbar navbar-light navbar-fixed-top" style="background-color: #e3f2fd;" role="navigation">
-            <div class="container">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="{{ path('homepage') }}">To Do List app</a>
+<body>
 
-                    <img src="{{ asset('img/Logo_OpenClassrooms.png') }}" alt="OpenClassrooms" />
+<nav class="navbar navbar-light navbar-fixed-top" style="background-color: #e3f2fd;" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="{{ path('homepage') }}">To Do List app</a>
+            <img src="{{ asset('img/Logo_OpenClassrooms.png') }}" alt="OpenClassrooms"/>
+        </div>
+    </div>
+</nav>
+
+<!-- Page Content -->
+<div class="container">
+    <div class="row" style="padding: 3rem 0 3rem 0">
+        {% if app.user == false %}
+            <a href="{{ path('user_create') }}" class="btn btn-primary">Créer un utilisateur</a>
+        {% endif %}
+        {% if is_granted('ROLE_ADMIN') %}
+            <a class="btn btn-info" href="{{ path('user_list') }}">Liste des utilisateurs</a></li>
+        {% endif %}
+        {% if app.user %}
+            <a href="{{ path('logout') }}" class="pull-right btn btn-danger">Se déconnecter</a>
+        {% else %}
+            <a href="{{ path('login') }}" class="btn btn-success">Se connecter</a>
+        {% endif %}
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            {% for flash_message in app.session.flashBag.get('success') %}
+                <div class="alert alert-success" role="alert">
+                    <strong>Superbe !</strong> {{ flash_message }}
                 </div>
-            </div>
-        </nav>
+            {% endfor %}
 
-        <!-- Page Content -->
-        <div class="container">
-            <div class="row" style="padding: 3rem 0 3rem 0">
-                <a href="{{ path('user_create') }}" class="btn btn-primary">Créer un utilisateur</a>
-                {% if is_granted('ROLE_ADMIN') %}
-                    <a class="btn btn-info" href="{{ path('user_list') }}">Liste des utilisateurs</a></li>
-                {% endif %}
+            {% for flash_message in app.session.flashBag.get('error') %}
+                <div class="alert alert-danger" role="alert">
+                    <strong>Oops !</strong> {{ flash_message }}
+                </div>
+            {% endfor %}
+
+            {% block header_title %}
+                <h1>Bienvenue sur Todo List, l'application vous permettant de gérer l'ensemble de vos tâches sans effort
+                    !</h1>
+            {% endblock %}
+
+            {% block header_img %}
+                <img class="slide-image" src="{{ asset('img/todolist_homepage.jpg') }}" alt="todo list">
+            {% endblock %}
+        </div>
+    </div>
+
+    <br/>
+
+    <div class="row">
+        <div class="col-md-12">
+
+            {% block button_all_option %}
                 {% if app.user %}
-                <a href="{{ path('logout') }}" class="pull-right btn btn-danger">Se déconnecter</a>
-                {% else %}
-                <a href="{{ path('login') }}" class="btn btn-success">Se connecter</a>
-                {% endif %}
-            </div>
-
-            <div class="row">
-                <div class="col-md-12">
-                    {% for flash_message in app.session.flashBag.get('success') %}
-                        <div class="alert alert-success" role="alert">
-                            <strong>Superbe !</strong> {{ flash_message }}
-                        </div>
-                    {% endfor %}
-
-                    {% for flash_message in app.session.flashBag.get('error') %}
-                        <div class="alert alert-danger" role="alert">
-                            <strong>Oops !</strong> {{ flash_message }}
-                        </div>
-                    {% endfor %}
-
-                    {% block header_title %}{% endblock %}
-                    {% block header_img %}
-                        <img class="slide-image" src="{{ asset('img/todolist_homepage.jpg') }}" alt="todo list">
-                    {% endblock %}
-                </div>
-            </div>
-
-            <br />
-
-            <div class="row">
-                <div class="col-md-12">
-                    {% block body %}{% endblock %}
-                </div>
-            </div>
-        </div>
-        <!-- /.container -->
-
-        <div class="container">
-            <hr>
-            <footer>
-                <div class="row">
-                    <div class="col-lg-12">
-                        <p class="pull-right">Copyright &copy; OpenClassrooms</p>
+                    <div style="display: flex; justify-content: space-between;padding: 3rem 0 3rem 0">
+                        <a class="btn btn-success" href="{{ path('task_create') }}">Créer une nouvelle tâche</a>
+                        <a class="btn btn-primary" href="{{ path('task_list_all') }}">Consulter la liste des tâches</a>
+                        <a class="btn btn-info" href="{{ path('task_list_not_done') }}">Consulter la liste des tâches à
+                            faire</a>
+                        <a class="btn btn-warning" href="{{ path('task_list_done') }}">Consulter la liste des tâches
+                            terminées</a>
                     </div>
-                </div>
-            </footer>
+                {% endif %}
+            {% endblock %}
 
+            {% block body %}{% endblock %}
         </div>
-    </body>
+    </div>
+</div>
+<!-- /.container -->
+
+<div class="container">
+    <hr>
+
+    <footer>
+        <div class="row">
+            <div class="col-lg-12">
+                <p class="pull-right">Copyright &copy; OpenClassrooms</p>
+            </div>
+        </div>
+    </footer>
+
+</div>
+</body>
 </html>

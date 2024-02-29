@@ -94,7 +94,6 @@ class TaskControllerTest extends WebTestCase
         $this->client->loginUser($user);
         $this->client->request('GET', '/tasks/done');
         $this->assertResponseIsSuccessful();
-
     }
 
     public function testListActionNotDone()
@@ -103,7 +102,6 @@ class TaskControllerTest extends WebTestCase
         $this->client->loginUser($user);
         $this->client->request('GET', '/tasks/not-done');
         $this->assertResponseIsSuccessful();
-
     }
 
     private function getUserName(string $name): ?User
@@ -120,8 +118,7 @@ class TaskControllerTest extends WebTestCase
         $entityManager = $this->client->getContainer()->get('doctrine.orm.entity_manager');
         /** @var TaskRepository $taskRepository */
         $taskRepository = $entityManager->getRepository(Task::class);
-
-        return $taskRepository->findOneByUser($user->getId());
+        return $taskRepository->findOneBy(['user' => $user]);
     }
 
     private function getTask(): Task

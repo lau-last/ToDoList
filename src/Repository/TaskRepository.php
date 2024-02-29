@@ -22,16 +22,6 @@ class TaskRepository extends ServiceEntityRepository
         parent::__construct($registry, Task::class);
     }
 
-    public function findOneByUser(int $userId)
-    {
-        return $this->createQueryBuilder('t')
-            ->join('t.user', 'u')
-            ->andWhere('u.id = :userId')
-            ->setParameter('userId', $userId)
-            ->setMaxResults(1)
-            ->getQuery()
-            ->getResult();
-    }
     //    /**
     //     * @return Task[] Returns an array of Trick objects
     //     */

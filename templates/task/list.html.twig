@@ -42,7 +42,7 @@
                             <a class="btn btn-warning btn-sm mx-2 align-middle"
                                href="{{ path('task_edit', {'id' : task.id }) }}">Modifier</a>
                         </div>
-                        {% if (app.user == task.user) or (is_granted('ROLE_ADMIN') and task.user.username == 'Anonyme')%}
+                        {% if (app.user == task.user) or (is_granted('ROLE_ADMIN') and task.user.username == 'Anonymous')%}
                         <div>
                             <a class="btn btn-danger btn-sm pull-right"
                                     href="{{ path('task_delete', {'id' : task.id }) }}">Supprimer</a>
@@ -54,7 +54,6 @@
         {% else %}
             <div class="alert alert-warning" role="alert">
                 Il n'y a pas encore de tâche enregistrée.
-                <a href="{{ path('task_create') }}" class="btn btn-warning pull-right">Créer une tâche</a>
             </div>
         {% endfor %}
     </div>

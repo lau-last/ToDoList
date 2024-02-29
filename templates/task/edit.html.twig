@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block header_img %}
+    <img class="slide-image" src="{{ asset('img/todolist_content.jpg') }}" alt="todo list">
+{% endblock %}
+
+{% block header_title %}
+        <h1 class="text-center">Modification de la tâche</h1>
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        {{ form_start(form, {'action' : path('task_edit', { 'id' : task.id })}) }}
+            {{ form_widget(form) }}
+            <button type="submit" class="btn btn-success pull-right">Modifier</button>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
